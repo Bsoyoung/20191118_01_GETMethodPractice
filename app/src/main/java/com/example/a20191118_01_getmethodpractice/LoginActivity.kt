@@ -17,6 +17,21 @@ class LoginActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        rememberIdCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            //연습문제.
+            //각각의 결과를 저장하고 상황에 맞는 토스트를 띄우자.
+            //앱을 다시 킬 떄 체크했던 결과를 이어서 보여주자.
+            ContextUtil.setIdRemeber(mContext,isChecked)
+
+            if(isChecked){
+                Toast.makeText(mContext,"아이디를 저장 O",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(mContext,"아이디를 저장 X",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
         loginBtn.setOnClickListener {
             if(rememberIdCheckBox.isChecked){
                 ContextUtil.setUserId(mContext,idEdt.text.toString())
@@ -35,6 +50,9 @@ class LoginActivity : BaseActivity() {
         var savedID = ContextUtil.getUserId(mContext)
 
         idEdt.setText(savedID)
+
+        val needIdRemember = ContextUtil.getIdRemeber(mContext)
+        rememberIdCheckBox.isChecked = needIdRemember
     }
 
 }
